@@ -25,8 +25,8 @@ Os scripts fornecidos aqui têm como objetivo simplificar o processo de configur
 
 1. **Clonar o Repositório**:
    ```bash
-   git clone https://github.com/seu-usuario/instalacao-netbox.git
-   cd instalacao-netbox
+   git clone https://github.com/voltolini/netbox.git
+   cd netbox.git
    ```
 
 2. **Executar o Script de Instalação**:
