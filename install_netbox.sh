@@ -68,14 +68,15 @@ install_netbox() {
     sed -i "s/^SECRET_KEY = .*/SECRET_KEY = '$SECRET_KEY'/" netbox/netbox/configuration.py
     sed -i "s/^ALLOWED_HOSTS = .*/ALLOWED_HOSTS = ['*']/" netbox/netbox/configuration.py
 
-    # Ajustar bloco DATABASE linha a linha para evitar erro de indentação
+    # Ajustar bloco DATABASE linha a linha, incluindo CONN_MAX_AGE
     sed -i "s/^DATABASE = .*/DATABASE = {/" netbox/netbox/configuration.py
     sed -i "/^DATABASE = {/!b;n;c\    'NAME': '$POSTGRES_DB'," netbox/netbox/configuration.py
     sed -i "/^    'NAME':/!b;n;c\    'USER': '$POSTGRES_USER'," netbox/netbox/configuration.py
     sed -i "/^    'USER':/!b;n;c\    'PASSWORD': '$POSTGRES_PASSWORD'," netbox/netbox/configuration.py
     sed -i "/^    'PASSWORD':/!b;n;c\    'HOST': 'localhost'," netbox/netbox/configuration.py
     sed -i "/^    'HOST':/!b;n;c\    'PORT': ''," netbox/netbox/configuration.py
-    sed -i "/^    'PORT':/!b;n;c\}" netbox/netbox/configuration.py
+    sed -i "/^    'PORT':/!b;n;c\    'CONN_MAX_AGE': 300," netbox/netbox/configuration.py
+    sed -i "/^    'CONN_MAX_AGE':/!b;n;c\}" netbox/netbox/configuration.py
 
     # Executar migrações e coletar arquivos estáticos
     python3 netbox/manage.py migrate
